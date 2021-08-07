@@ -123,7 +123,31 @@ namespace exam_6
                     {
                         var query = context.Request.QueryString;
                         var idFrom = Convert.ToInt32(query.Get("id"));
-                        content = BuildHtml(absFilename, tasks.Find(t => t.Id == idFrom));
+                        var model = tasks.FirstOrDefault(t => t.Id == idFrom);
+                        content = BuildHtml(absFilename, model);
+                    }
+                    else if (context.Request.HttpMethod == HttpMethod.Post.Method)
+                    {
+                        var body = ReadBodyFromPostRequest(context.Request);
+                        var button = body.Split('=')[1].ToLower();
+                        switch (button)
+                        {
+                            case "done":
+                                tasks[int.Parse(body.Split('=')[0]) - 1].NewStatus = false;
+                                tasks[int.Parse(body.Split('=')[0]) - 1].CompleteDate =
+                                    DateTime.Now.ToString("dd.MM.yyyy");
+                                var json = JsonConvert.SerializeObject(tasks);
+                                File.WriteAllText(_filesDirectory + @"\tasks.json", json);
+                                ListFill();
+                                break;
+                            case "delete":
+                                tasks.RemoveAt(int.Parse(body.Split('=')[0]) - 1);
+                                var json2 = JsonConvert.SerializeObject(tasks);
+                                File.WriteAllText(_filesDirectory + @"\tasks.json", json2);
+                                ListFill();
+                                break;
+                        }
+                        content = BuildHtml("index.html", tasks);
                     }
                     else
                     {
