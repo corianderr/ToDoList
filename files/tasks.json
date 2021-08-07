@@ -1,0 +1,34 @@
+[
+  {
+    "Id": 1,
+    "Headline": "Task #1",
+    "Name": "Karina A",
+    "CreationDate": "07.08.2021",
+    "CompleteDate": null,
+    "NewStatus": false
+  },
+  {
+    "Id": 2,
+    "Headline": "Control work 6",
+    "Name": "Karina A",
+    "CreationDate": "07.08.2021",
+    "CompleteDate": null,
+    "NewStatus": true
+  },
+  {
+    "Id": 3,
+    "Headline": "Task #2",
+    "Name": "Karina A",
+    "CreationDate": "07.08.2021",
+    "CompleteDate": null,
+    "NewStatus": true
+  },
+  {
+    "Id": 4,
+    "Headline": "Task #3",
+    "Name": "Karina A",
+    "CreationDate": "07.08.2021",
+    "CompleteDate": null,
+    "NewStatus": true
+  }
+]
