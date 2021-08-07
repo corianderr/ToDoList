@@ -4,7 +4,7 @@ using System.Text;
 
 namespace exam_6
 {
-    class Task
+    public  class Task
     {
         public int Id { get; set; }
         public string Headline { get; set; }
