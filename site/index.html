@@ -12,7 +12,7 @@
         <h1 align="center">Task List</h1>
         <aside>
             <h4>Add new task</h4>
-            <form action="http://localhost:8888/index.html" method="get">
+            <form action="http://localhost:8888/index.html" method="post">
                 <label for="headline">Headline:</label><br>
                 <input type="text" id="headline" name="headline"><br>
                 <label for="name">Name:</label><br>
@@ -81,9 +81,9 @@
                         <div>
                             @if(Model[i].NewStatus == true)
                             {
-                            <input type="submit" value="Done" id="btn_done" name="done" />
+                            <input type="submit" value="Done" id="btn_done" name="@Model[i].Id" />
                             }
-                            <input type="submit" value="Delete" id="btn_delete" name="delete" />
+                            <input type="submit" value="Delete" id="btn_delete" name="@Model[i].Id" />
                         </div>
                     </form>
                 </th>

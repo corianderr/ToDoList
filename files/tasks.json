@@ -5,7 +5,8 @@
     "Name": "Karina A",
     "CreationDate": "07.08.2021",
     "CompleteDate": null,
-    "NewStatus": false
+    "NewStatus": false,
+    "Description": null
   },
   {
     "Id": 2,
@@ -13,7 +14,8 @@
     "Name": "Karina A",
     "CreationDate": "07.08.2021",
     "CompleteDate": null,
-    "NewStatus": true
+    "NewStatus": false,
+    "Description": null
   },
   {
     "Id": 3,
@@ -21,7 +23,8 @@
     "Name": "Karina A",
     "CreationDate": "07.08.2021",
     "CompleteDate": null,
-    "NewStatus": true
+    "NewStatus": false,
+    "Description": null
   },
   {
     "Id": 4,
@@ -29,6 +32,7 @@
     "Name": "Karina A",
     "CreationDate": "07.08.2021",
     "CompleteDate": null,
-    "NewStatus": true
+    "NewStatus": true,
+    "Description": null
   }
 ]

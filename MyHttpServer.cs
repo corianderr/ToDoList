@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
+using Newtonsoft.Json;
 using RazorEngine;
 using RazorEngine.Templating;
 
@@ -17,6 +18,7 @@ namespace exam_6
         private string _filesDirectory;
         private HttpListener _listener;
         private int _port;
+        private List<Task> tasks;
         public MyHttpServer(int port)
         {
             this.Initialize(port);
@@ -56,8 +58,18 @@ namespace exam_6
                 }
             }
         }
+
+        private void ListFill()
+        {
+            tasks = FileReader.ReadFile<Task>(_filesDirectory + @"\tasks.json");
+            foreach (var item in tasks)
+            {
+                item.Id = tasks.IndexOf(item) + 1;
+            }
+        }
         private void Process(HttpListenerContext context)
         {
+            ListFill();
             string filename = context.Request.Url.AbsolutePath;
             Console.WriteLine(filename);
             filename = filename.Trim('/');
@@ -66,8 +78,38 @@ namespace exam_6
             switch (filename)
             {
                 case "index.html":
-                    var tasks = FileReader.ReadFile<Task>(_filesDirectory + @"\tasks.json");
-                    content = BuildHtml(absFilename, tasks);
+                    if (context.Request.HttpMethod == "POST")
+                    {
+                        var body = ReadBodyFromPostRequest(context.Request);
+                        if (!body.Contains('&'))
+                        {
+                            var button = body.Split('=')[1].ToLower();
+                            switch (button)
+                            {
+                                case "done":
+                                    tasks[int.Parse(body.Split('=')[0])-1].NewStatus = false;
+                                    var json = JsonConvert.SerializeObject(tasks);
+                                    File.WriteAllText(_filesDirectory + @"\tasks.json", json);
+                                    ListFill();
+                                    break;
+                                case "delete":
+                                    tasks.RemoveAt(int.Parse(body.Split('=')[0]) - 1);
+                                    var json2 = JsonConvert.SerializeObject(tasks);
+                                    File.WriteAllText(_filesDirectory + @"\tasks.json", json2);
+                                    ListFill();
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            
+                        }
+                        content = BuildHtml(absFilename, tasks);
+                    }
+                    else
+                    {
+                        content = BuildHtml(absFilename, tasks);
+                    }
                     break;
                 default:
                     content = File.ReadAllText(absFilename);
@@ -151,6 +193,9 @@ namespace exam_6
             html = razorService.Run(filename, typeof(T), model);
             return html;
         }
-
+        private string BuildHtml(string filename)
+        {
+            return BuildHtml(filename, new object());
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace exam_6
         public string CreationDate { get; set; }
         public string CompleteDate { get; set; }
         public  bool NewStatus { get; set; }
-
+        public string Description { get; set; }
         public Task()
         {
 
