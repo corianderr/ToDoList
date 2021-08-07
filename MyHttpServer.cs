@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using Newtonsoft.Json;
@@ -78,7 +79,7 @@ namespace exam_6
             switch (filename)
             {
                 case "index.html":
-                    if (context.Request.HttpMethod == "POST")
+                    if (context.Request.HttpMethod == HttpMethod.Post.Method)
                     {
                         var body = ReadBodyFromPostRequest(context.Request);
                         if (!body.Contains('&'))
@@ -88,6 +89,8 @@ namespace exam_6
                             {
                                 case "done":
                                     tasks[int.Parse(body.Split('=')[0])-1].NewStatus = false;
+                                    tasks[int.Parse(body.Split('=')[0]) - 1].CompleteDate =
+                                        DateTime.Now.ToString("dd.MM.yyyy");
                                     var json = JsonConvert.SerializeObject(tasks);
                                     File.WriteAllText(_filesDirectory + @"\tasks.json", json);
                                     ListFill();
@@ -113,6 +116,18 @@ namespace exam_6
                     else
                     {
                         content = BuildHtml(absFilename, tasks);
+                    }
+                    break;
+                case "task.html":
+                    if (context.Request.HttpMethod == HttpMethod.Get.Method)
+                    {
+                        var query = context.Request.QueryString;
+                        var idFrom = Convert.ToInt32(query.Get("id"));
+                        content = BuildHtml(absFilename, tasks.Find(t => t.Id == idFrom));
+                    }
+                    else
+                    {
+                        content = File.ReadAllText(absFilename);
                     }
                     break;
                 default:

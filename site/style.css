@@ -69,3 +69,12 @@ table, td, th {
 table {
     border-collapse: collapse;
 }
+.col-1-3 {
+    width: 33.3333333333%;
+    float: left;
+}
+
+.col-2-3 {
+    width: 66.6666666667%;
+    float: left;
+}

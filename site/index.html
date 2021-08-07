@@ -55,7 +55,7 @@
                     <p>@Model[i].Id</p>
                 </th>
                 <th>
-                    <p>@Model[i].Headline</p>
+                    <p><a href='@string.Format("http://localhost:8888/task.html?id={0}", @Model[i].Id)'>@Model[i].Headline</a></p>
                 </th>
                 <th>
                     <p>@Model[i].Name</p>
