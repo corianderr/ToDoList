@@ -18,13 +18,13 @@ namespace exam_6
 
         }
 
-        public Task(int id, string headline, string name)
+        public Task(string headline, string name, string description)
         {
-            Id = id;
             Headline = headline;
             Name = name;
             CreationDate = DateTime.Now.ToString("dd.MM.yyyy");
             NewStatus = true;
+            Description = description;
         }
     }
 }

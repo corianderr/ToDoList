@@ -102,7 +102,11 @@ namespace exam_6
                         }
                         else
                         {
-                            
+                            var parameters = body.Split('&');
+                            tasks.Add(new Task(parameters[0].Split('=')[1].Replace('+', ' '), parameters[1].Split('=')[1].Replace('+', ' '), parameters[2].Split('=')[1].Replace('+', ' ')));
+                            var json3 = JsonConvert.SerializeObject(tasks);
+                            File.WriteAllText(_filesDirectory + @"\tasks.json", json3);
+                            ListFill();
                         }
                         content = BuildHtml(absFilename, tasks);
                     }
